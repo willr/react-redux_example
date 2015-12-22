@@ -30,36 +30,6 @@ function redirectToDashboard(nextState, replaceState) {
   }
 }
 
-/*
-const MyRouter = React.createClass({
-  render() {
-    return <div />;
-  }
-});
-*/
-
-/*
-const MyRouter = React.createClass({
-
-  render() {
-    return (
-      <Router>
-        <IndexRoute component={Dashboard} />
-        <Route path='/' component={App} >
-          <Route path='about' component={About} />
-          <Route path='inbox' component={Inbox} >
-            <IndexRoute component={InboxStats} />
-            <Route path='/messages/:id' component={Message} />
-            <Redirect from='messages/:id' to='/messages/:id' />
-          </Route>
-          <Route path='pageone' component={PageOne} />
-        </Route> 
-      </Router>
-    )
-  }
-})
-*/
-
 function dashboardLandingComponent(location, cb) {
 
   // share the path
@@ -77,9 +47,6 @@ function authPageOneComponent(location, cb) {
   } 
   cb();
 }
-
-// getComponent={dashboardLandingComponent}
-//getComponent={authPageOneComponent} 
 
 const MyRouter = React.createClass({
 
@@ -109,10 +76,4 @@ const MyRouter = React.createClass({
 
 export default MyRouter;
 
-/*
-module.exports = {
-  MyRouter: MyRouter,
-  default: MyRouter
-};
-*/
 
