@@ -4,6 +4,8 @@ import { Router, Route, Link } from 'react-router'
 import { createHistory, useBasename } from 'history'
 import { IndexRoute, Redirect } from 'react-router'
 
+import PageOne from '../components/PageOne.js'
+
 var About = require('../components/About.js').About
 
 const App = React.createClass({
@@ -15,6 +17,7 @@ const App = React.createClass({
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/about'>About</Link></li>
           <li><Link to='/inbox'>Inbox</Link></li>
+          <li><Link to='/pageone'> PageOne </Link></li>
         </ul>
         {this.props.children || 'Hello'}
       </div>
@@ -88,6 +91,7 @@ const MyRouter = React.createClass({
             <Route path='/messages/:id' component={Message} />
             <Redirect from='messages/:id' to='/messages/:id' />
           </Route>
+          <Route path='pageone' component={PageOne} />
         </Route> 
       </Router>
     )
