@@ -1,93 +1,54 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Router, Route, Link } from 'react-router'
-import { createHistory, useBasename } from 'history'
-import { IndexRoute, Redirect } from 'react-router'
+import React from 'react';
+// import { render } from 'react-dom';
+import { Router, Route } from 'react-router';
+// import { createHistory, useBasename } from 'history';
+import { IndexRoute } from 'react-router';
 
-import PageOne from '../components/PageOne.js'
+import auth from '../utils/auth.js';
 
-var About = require('../components/About.js').About
+import About from '../components/About.js';
+import App from '../components/App.js';
+import Dashboard from '../components/Dashboard.js';
+import Landing from '../components/Landing.js';
+import Login from '../components/Login.js';
+import Logout from '../components/Logout.js';
+import PageOne from '../components/PageOne.js';
+import PageTwo from '../components/PageTwo.js';
+import User from '../components/User.js';
 
-const App = React.createClass({
-  render() {
-    return (
-      <div>
-        <h1>App</h1>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/about'>About</Link></li>
-          <li><Link to='/inbox'>Inbox</Link></li>
-          <li><Link to='/pageone'> PageOne </Link></li>
-        </ul>
-        {this.props.children || 'Hello'}
-      </div>
-    )
+function redirectToLogin(nextState, replaceState) {
+  if (!auth.loggedIn()) {
+    replaceState({
+      nextPathname: nextState.location.pathname
+    }, '/login');
   }
-})
+}
 
-const Dashboard = React.createClass({
-  render() {
-    return <div>Welcome to the app!</div>
+function redirectToDashboard(nextState, replaceState) {
+  if (auth.loggedIn()) {
+    replaceState(null, '/');
   }
-});
+}
 
-const Inbox = React.createClass({
+/*
+const MyRouter = React.createClass({
   render() {
-    return (
-      <div>
-        <h2>Inbox</h2>
-        {this.props.children || 'Welcome to your Inbox'}
-      </div>
-    )
+    return <div />;
   }
 });
+*/
 
-const Message = React.createClass({
-  render() {
-    return (
-      <div>
-        <h3>id: {this.props.params.id}</h3>
-        From: George <br/>
-        To: Me <br/>
-        Subjct: Turtles...<br/>
-      </div>
-    )
-  }
-});
-
-const InboxStats = React.createClass({
-  render() {
-    return (
-      <div>
-        <div>
-          Inbox Stats: <br/>
-          5 unread <br/>
-          10 read
-        </div>
-        <div>
-          <h2>Messages</h2>
-          <Link to='/messages/123'>Message from George</Link> <br/>
-          The redirect <Link to='/inbox/messages/123'> redirect there </Link>
-        </div>
-      </div>
-    )
-  }
-});
-
+/*
 const MyRouter = React.createClass({
 
   render() {
     return (
       <Router>
-        {/* Show the dashboard at / */}
         <IndexRoute component={Dashboard} />
         <Route path='/' component={App} >
           <Route path='about' component={About} />
           <Route path='inbox' component={Inbox} >
-            {/* add some nested routes where we want the UI to next */}
-            {/* render the stats page when at the '/inbox' */}
             <IndexRoute component={InboxStats} />
-            {/* render the message component at /inbox/messages/123 */}
             <Route path='/messages/:id' component={Message} />
             <Redirect from='messages/:id' to='/messages/:id' />
           </Route>
@@ -97,10 +58,61 @@ const MyRouter = React.createClass({
     )
   }
 })
+*/
 
+function dashboardLandingComponent(location, cb) {
+
+  // share the path
+  // return the correct component
+  if (auth.loggedIn()) {
+    cb(null, Dashboard.default);
+  } else {
+    cb(null, Landing.default);
+  }
+}
+
+function authPageOneComponent(location, cb) {
+  if (auth.loggedIn()) {
+    cb(null, PageOne.default);
+  } 
+  cb();
+}
+
+// getComponent={dashboardLandingComponent}
+//getComponent={authPageOneComponent} 
+
+const MyRouter = React.createClass({
+
+  render() {
+    return (
+      <Router>
+        <Route component={App}  >
+          <Route path='/logout' component={Logout} />
+          <Route path='/about' component={About} />
+          <Route onEnter={redirectToDashboard} >
+            <Route path='/login' component={Login} />
+          </Route>
+          <Route onEnter={redirectToLogin} >
+            <Route path='/user/:id' component={User} />
+          </Route>
+          <Route path='/' getComponent={dashboardLandingComponent}  >
+            <IndexRoute getComponent={authPageOneComponent}/>
+            <Route onEnter={redirectToLogin} >
+              <Route path='/page2' component={PageTwo} />
+            </Route>
+          </Route>
+        </Route>
+      </Router>
+    );
+  }
+});
+
+export default MyRouter;
+
+/*
 module.exports = {
   MyRouter: MyRouter,
-  App: App
+  default: MyRouter
 };
-
+*/
 

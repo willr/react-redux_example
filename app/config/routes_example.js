@@ -1,12 +1,12 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Router, Route, Link } from 'react-router'
-import { createHistory, useBasename } from 'history'
-import { IndexRoute, Redirect } from 'react-router'
+import React from 'react';
+// import { render } from 'react-dom';
+import { Router, Route, Link } from 'react-router';
+// import { createHistory, useBasename } from 'history';
+import { IndexRoute, Redirect } from 'react-router';
 
-import PageOne from '../components/PageOne.js'
+import PageOne from '../components/PageOne.js';
 
-var About = require('../components/About.js').About
+const About = require('../components/About.js').About;
 
 const App = React.createClass({
   render() {
@@ -21,13 +21,13 @@ const App = React.createClass({
         </ul>
         {this.props.children || 'Hello'}
       </div>
-    )
+    );
   }
-})
+});
 
 const Dashboard = React.createClass({
   render() {
-    return <div>Welcome to the app!</div>
+    return <div>Welcome to the app!</div>;
   }
 });
 
@@ -38,7 +38,7 @@ const Inbox = React.createClass({
         <h2>Inbox</h2>
         {this.props.children || 'Welcome to your Inbox'}
       </div>
-    )
+    );
   }
 });
 
@@ -51,7 +51,7 @@ const Message = React.createClass({
         To: Me <br/>
         Subjct: Turtles...<br/>
       </div>
-    )
+    );
   }
 });
 
@@ -70,7 +70,7 @@ const InboxStats = React.createClass({
           The redirect <Link to='/inbox/messages/123'> redirect there </Link>
         </div>
       </div>
-    )
+    );
   }
 });
 
@@ -94,9 +94,9 @@ const MyRouter = React.createClass({
           <Route path='pageone' component={PageOne} />
         </Route> 
       </Router>
-    )
+    );
   }
-})
+});
 
 module.exports = {
   MyRouter: MyRouter,

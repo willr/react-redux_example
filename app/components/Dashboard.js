@@ -1,9 +1,9 @@
-import React from 'react'
-import auth from '../utils/auth'
+import React from 'react';
+import auth from '../utils/auth';
 
 const Dashboard = React.createClass({
   render() {
-    const token = auth.getToken()
+    const token = auth.getToken();
 
     return (
       <div>
@@ -12,9 +12,9 @@ const Dashboard = React.createClass({
         <p>{token}</p>
         {this.props.children}
       </div>
-    )
+    );
   }
-})
+});
 
-export default Dashboard
+export default Dashboard;
 

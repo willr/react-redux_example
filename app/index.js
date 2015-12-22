@@ -1,15 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router } from 'react-router';
-import { createHistory } from 'history'
 
-var routes = require('./config/routes.js');
-const App = routes.App;
-const MyRouter = routes.MyRouter;
-// import { MyRouter, App } from './config/routes.js'
+// const routes = require('./config/routes.js');
+// const MyRouter = routes.MyRouter;
+import MyRouter from './config/routes.js';
 
+// console.debug(typeof ORouter + string(ORouter));
+// const Factory = React.createFactory(MyRouter);
+// const rootFactory = Factory({});
+// render(rootFactory, document.getElementById('root'));
+
+/* <MyRouter />, document.getElementById('root') */
 
 render(
-  <MyRouter />, document.getElementById('root')
-)
+  <MyRouter />, document.getElementById('root')  
+);
+
 

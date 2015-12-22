@@ -1,16 +1,16 @@
-import auth from '../utils/auth.js'
+import auth from '../utils/auth.js';
 
 function redirectToLogin(nextState, replaceState) {
   if (!auth.loggedIn()) {
     replaceState({
       nextPathname: nextState.location.pathname
-    }, '/login')
+    }, '/login');
   }
 }
 
 function redirectToDashboard(nextState, replaceState) {
   if (auth.loggedIn()) {
-    replaceState(null, '/')
+    replaceState(null, '/');
   }
 }
 
@@ -22,15 +22,15 @@ export default {
    { path: '/logout',
       getComponent: (location, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('../components/Logout'))
-        })
+          cb(null, require('../components/Logout'));
+        });
       }
     },
     { path: '/about',
       getComponent: (location, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('../components/About'))
-        })
+          cb(null, require('../components/About'));
+        });
       }
     },
 
@@ -41,8 +41,8 @@ export default {
         { path: '/login',
           getComponent: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../components/Login'))
-            })
+              cb(null, require('../components/Login'));
+            });
           }
         }
         // ...
@@ -55,8 +55,8 @@ export default {
         { path: '/user/:id',
           getComponent: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../components/User'))
-            })
+              cb(null, require('../components/User'));
+            });
           }
         }
         // ...
@@ -69,12 +69,12 @@ export default {
         // Dynamically load the correct component
         if (auth.loggedIn()) {
           return require.ensure([], (require) => {
-            cb(null, require('../components/Dashboard'))
-          })
+            cb(null, require('../components/Dashboard'));
+          });
         }
         return require.ensure([], (require) => {
-          cb(null, require('../components/Landing'))
-        })
+          cb(null, require('../components/Landing'));
+        });
       },
 
       indexRoute: {
@@ -82,10 +82,10 @@ export default {
           // Only load if we're logged in
           if (auth.loggedIn()) {
             return require.ensure([], (require) => {
-              cb(null, require('../components/PageOne'))
-            })
+              cb(null, require('../components/PageOne'));
+            });
           }
-          return cb()
+          return cb();
         }
       }
       ,
@@ -96,8 +96,8 @@ export default {
             { path: '/page2',
               getComponent: (location, cb) => {
                 require.ensure([], (require) => {
-                  cb(null, require('../components/PageTwo'))
-                })
+                  cb(null, require('../components/PageTwo'));
+                });
               }
             }
             // ...
@@ -106,6 +106,6 @@ export default {
       ]
     }
   ]
-}
+};
 
 
