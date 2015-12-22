@@ -1,4 +1,5 @@
-import React from 'react'
+// import React from 'react'
+var React = require('react')
 
 const About = React.createClass({
   render() {
@@ -6,5 +7,9 @@ const About = React.createClass({
   }
 })
 
-export default About
+// export default About
+
+module.exports = {
+  About: About
+}
 

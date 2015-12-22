@@ -4,11 +4,12 @@
   "private": true,
   "description": "Carrot Messaging Web app, based on asyn redux sample",
   "scripts": {
-    "build:details": "webpack --display-error_details",
+    "build:details": "npm run clean && webpack --display-error_details",
     "browser": "webpack-dev-server",
-    "clean": "rimraf dist",
+    "clean": "rimraf public && npm run createStub",
+    "createStub": "mkdir public && cp app/index.html public/",
     "build:webpack": "NODE_ENV=production webpack ",
-    "build": "npm run clean && npm run build:webpack",
+    "build": "npm run clean && npm run createStub && npm run build:webpack",
     "lint": "eslint ."
   },
   "repository": {

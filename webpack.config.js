@@ -4,14 +4,15 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map', 
+  // devtool: 'cheap-module-eval-source-map', 
   entry: {
-    path: path.join(__dirname, 'app')
+    // path: path.join(__dirname, 'app')
+    app: ['./app/index.js']
   },
   output: {
-      path: path.join(__dirname, '/public/js'),
-      filename: "bundle.js",
-      publicPath: '/public/js/bundle.js'
+    path: path.resolve(__dirname, 'public/js'),
+    filename: "bundle.js",
+    publicPath: '/js'
   },
   module: {
     loaders: [
@@ -26,8 +27,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    //    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
     contentBase: './public'
