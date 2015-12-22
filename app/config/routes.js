@@ -35,17 +35,17 @@ function dashboardLandingComponent(location, cb) {
   // share the path
   // return the correct component
   if (auth.loggedIn()) {
-    cb(null, Dashboard.default);
+    return cb(null, Dashboard);
   } else {
-    cb(null, Landing.default);
+    return cb(null, Landing);
   }
 }
 
 function authPageOneComponent(location, cb) {
   if (auth.loggedIn()) {
-    cb(null, PageOne.default);
+    return cb(null, PageOne);
   } 
-  cb();
+  return cb();
 }
 
 const MyRouter = React.createClass({
