@@ -15,6 +15,7 @@ import Logout from '../components/Logout.js';
 import PageOne from '../components/PageOne.js';
 import PageTwo from '../components/PageTwo.js';
 import User from '../components/User.js';
+import TodoApp from '../components/TodoApp.js';
 
 function redirectToLogin(nextState, replaceState) {
   if (!auth.loggedIn()) {
@@ -66,6 +67,7 @@ const MyRouter = React.createClass({
             <IndexRoute getComponent={authPageOneComponent}/>
             <Route onEnter={redirectToLogin} >
               <Route path='/page2' component={PageTwo} />
+              <Route path='/todo' component={TodoApp} />
             </Route>
           </Route>
         </Route>

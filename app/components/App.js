@@ -38,6 +38,7 @@ const App = React.createClass({
           <li><Link to='/'>Home</Link> (changes depending on auth status)</li>
           <li><Link to='/page2'>Page Two</Link> (authenticated)</li>
           <li><Link to='/user/foo'>User: Foo</Link> (authenticated)</li>
+          <li><Link to='/todo'>Todo App</Link> (authenticated)</li>
         </ul>
         {this.props.children}
       </div>
