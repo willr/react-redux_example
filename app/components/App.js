@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+
 import auth from '../utils/auth';
 
 const App = React.createClass({
 
   getInitialState() {
     return {
-      loggedIn: auth.loggedIn()
+      loggedIn: auth.loggedIn(this.props.loginInfo)
     };
   },
 
@@ -17,10 +19,8 @@ const App = React.createClass({
   },
 
   componentWillMount() {
-    // logConsole('App component');i
-    // console.error('App component loading..');
     auth.onChange = this.updateAuth;
-    auth.login();
+    auth.login(null, null, this.props.loginInfo, null);
   },
   
   render() {
@@ -47,5 +47,12 @@ const App = React.createClass({
 
 });
 
-export default App;
+function select(state) {
+  return {
+    loginInfo: state.loginInfo
+  };
+}
+
+
+export default connect(select)(App);
 

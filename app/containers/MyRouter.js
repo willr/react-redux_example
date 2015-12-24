@@ -1,8 +1,7 @@
 import React from 'react';
-// import { render } from 'react-dom';
 import { Router, Route } from 'react-router';
-// import { createHistory, useBasename } from 'history';
 import { IndexRoute } from 'react-router';
+import { connect } from 'react-redux';
 
 import auth from '../utils/auth.js';
 
@@ -17,6 +16,9 @@ import PageTwo from '../components/PageTwo.js';
 import User from '../components/User.js';
 import TodoApp from '../components/TodoApp.js';
 
+import { VisibilityFilters } from '../actions/actions.js';
+
+/*
 function redirectToLogin(nextState, replaceState) {
   if (!auth.loggedIn()) {
     replaceState({
@@ -48,24 +50,52 @@ function authPageOneComponent(location, cb) {
   } 
   return cb();
 }
+*/
 
 const MyRouter = React.createClass({
-
+  redirectToLogin(nextState, replaceState) {
+    if (!auth.loggedIn(this.props.loginInfo)) {
+      replaceState({
+        nextPathname: nextState.location.pathname
+      }, '/login');
+    }
+  },
+  redirectToDashboard(nextState, replaceState) {
+    if (auth.loggedIn(this.props.loginInfo)) {
+      replaceState(null, '/');
+    }
+  },
+  dashboardLandingComponent(location, cb) {
+    // share the path
+    // return the correct component
+    if (auth.loggedIn(this.props.loginInfo)) {
+      return cb(null, Dashboard);
+    } else {
+      return cb(null, Landing);
+    }
+  },
+  authPageOneComponent(location, cb) {
+    if (auth.loggedIn(this.props.loginInfo)) {
+      return cb(null, PageOne);
+    } 
+    return cb();
+  },
+ 
   render() {
     return (
       <Router>
-        <Route component={App}  >
+        <Route component={App} >
           <Route path='/logout' component={Logout} />
           <Route path='/about' component={About} />
-          <Route onEnter={redirectToDashboard} >
+          <Route onEnter={this.redirectToDashboard} >
             <Route path='/login' component={Login} />
           </Route>
-          <Route onEnter={redirectToLogin} >
+          <Route onEnter={this.redirectToLogin} >
             <Route path='/user/:id' component={User} />
           </Route>
-          <Route path='/' getComponent={dashboardLandingComponent}  >
-            <IndexRoute getComponent={authPageOneComponent}/>
-            <Route onEnter={redirectToLogin} >
+          <Route path='/' getComponent={this.dashboardLandingComponent} >
+            <IndexRoute getComponent={this.authPageOneComponent} />
+            <Route onEnter={this.redirectToLogin} >
               <Route path='/page2' component={PageTwo} />
               <Route path='/todo' component={TodoApp} />
             </Route>
@@ -76,6 +106,27 @@ const MyRouter = React.createClass({
   }
 });
 
-export default MyRouter;
+// export default MyRouter;
 
+function selectTodos(todos, filter) {
+  switch(filter) {
+    case VisibilityFilters.SHOW_ALL:
+      return todos;
+    case VisibilityFilters.SHOW_COMPLETED:
+      return todos.filter(todo => todo.completed);
+    case VisibilityFilters.SHOW_ACTIVE:
+      return todos.filter(todo => !todo.completed);
+  }
+}
+
+function select(state) {
+
+  return {
+    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
+    visibilityFilter: state.visibilityFilter,
+    loginInfo: state.loginInfo
+  };
+}
+
+export default connect(select)(MyRouter);
 

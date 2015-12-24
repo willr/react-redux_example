@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions/actions.js';
+// import { addTodo, completeTodo, setVisibilityFilter } from '../actions/actions.js';
 
 import AddTodo from './AddTodo.js';
 import TodoList from './TodoList.js';
@@ -52,6 +53,5 @@ function select(state) {
   };
 }
 
-
 export default connect(select)(TodoApp);
-
+// export default TodoApp;

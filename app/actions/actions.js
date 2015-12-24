@@ -6,6 +6,10 @@
 export const ADD_TODO = 'ADD_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGOUT = 'LOGOUT';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+
 
 /*
  *  other constants
@@ -33,4 +37,14 @@ export function setVisibilityFilter(filter) {
   return { type: SET_VISIBILITY_FILTER, filter };
 }
 
+export function loginSucessful(token) {
+  return { type: LOGIN_SUCCESS, token };
+}
 
+export function logout() {
+  return { type: LOGOUT };
+}
+
+export function loginError() {
+  return { type: LOGIN_ERROR };
+}

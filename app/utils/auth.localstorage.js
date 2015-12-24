@@ -1,35 +1,35 @@
-
 module.exports = {
-  login(email, pass, state, cb) {
+  login(email, pass, cb) {
     cb = arguments[arguments.length - 1];
-    if (state.loginToken) {
-      if (cb) cb({ loggedIn:true, modified: false, token: state.loginToken });
+    if (localStorage.token) {
+      if (cb) cb(true);
       this.onChange(true);
       return;
     }
     pretendRequest(email, pass, (res) => {
       if (res.authenticated) {
-        
-        if (cb) cb({ loggedIn:true, modified: true, token: res.token });
+        localStorage.token = res.token;
+        if (cb) cb(true);
         this.onChange(true);
       } else {
-        if (cb) cb({ loggedIn:false, modified: true, token: '' });
+        if (cb) cb(false);
         this.onChange(false);
       }
     });
   },
 
-  getToken: function (state) {
-    return state.loginToken;
+  getToken: function () {
+    return localStorage.token;
   },
 
   logout: function (cb) {
-    if (cb) cb({ error: false });
+    delete localStorage.token;
+    if (cb) cb();
     this.onChange(false);
   },
 
-  loggedIn: function (state) {
-    return !!state.loginToken;
+  loggedIn: function () {
+    return !!localStorage.token;
   },
 
   onChange: function () {}
